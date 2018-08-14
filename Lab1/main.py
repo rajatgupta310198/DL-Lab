@@ -29,7 +29,7 @@ def nn(x_data, drop_out):
     return fully_connected
 
 
-out = nn(X, droput)
+out = nn(X, dropout)
 loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=Y, logits=out))
 train_op = tf.train.AdamOptimizer(learning_rate=0.001).minimize(loss)
 
@@ -41,11 +41,12 @@ saver = tf.train.Saver()
 sess = tf.Session()
 sess.run(tf.global_variables_initializer())
 for epoch in range(1000):
-    for i in range(25000//128):
+    for i in range(23000//128):
         image, label = data.next_batch(128, i)
         _, train = sess.run([loss, train_op], feed_dict={X:image, Y:label, dropout:0.8})
 
-        acc = sess.run(accuracy, feed_dict={X:image, Y:labels, dropout:1.})
+        test_images, test_labels = data.get_test()
+        acc = sess.run(accuracy, feed_dict={X:test_images, Y:test_labels, dropout:1.})
 
         print("Epoch ", epoch, " acc : ", acc)
 
