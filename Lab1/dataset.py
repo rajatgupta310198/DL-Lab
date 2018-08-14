@@ -28,7 +28,10 @@ class CatDog(object):
                 train_labels_list.append(1)
         return np.array(train_images_list), self.one_hot(train_labels_list)
         
+    def next_batch(self, batch_size, current_inde):
 
+        return self.train_images[current_inde:batch_size], self.train_labels[current_inde:batch_size]
+        
     def one_hot(self, labels):
         labels = np.array(labels)
         b = np.zeros((len(labels), 2))
