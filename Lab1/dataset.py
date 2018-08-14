@@ -20,6 +20,7 @@ class CatDog(object):
         print(len(train_images))
         for image in train_images:
             img = cv2.imread(os.getcwd() + self.data_dir +'/train/' + str(image))
+            img = cv2.resize(img, (50, 50))
             train_images_list.append(img)
             if image == re.match('cat', image):
                 train_labels_list.append(0)
