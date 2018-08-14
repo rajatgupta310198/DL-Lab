@@ -17,8 +17,9 @@ class CatDog(object):
         train_images = os.listdir(os.getcwd() + self.data_dir +'/train')
         train_images_list = []
         train_labels_list = []
+        print(len(train_images))
         for image in train_images:
-            img = cv2.imread(image)
+            img = cv2.imread(os.getcwd() + self.data_dir +'/train/' + str(image))
             train_images_list.append(img)
             if image == re.match('cat', image):
                 train_labels_list.append(0)
@@ -29,13 +30,14 @@ class CatDog(object):
 
     def one_hot(self, labels):
         labels = np.array(labels)
-        b = np.zeros((len(labels), 3))
+        b = np.zeros((len(labels), 2))
         b[np.arange(len(labels)), labels] = 1
         return b
 
 
     def read_test_images(self):
         pass
+
 
 
 
