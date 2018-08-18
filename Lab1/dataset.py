@@ -18,8 +18,8 @@ class CatDog(object):
         train_images = os.listdir(os.getcwd() + self.data_dir +'/train')
         train_images_list = []
         train_labels_list = []
-        print(len(train_images))
-        for image in train_images:
+        
+        for image in train_images[:5000]:
             img = cv2.imread(os.getcwd() + self.data_dir +'/train/' + str(image))
             img = cv2.resize(img, (50, 50))
             train_images_list.append(img)
@@ -27,14 +27,16 @@ class CatDog(object):
                 train_labels_list.append(0)
             else:
                 train_labels_list.append(1)
-        return np.array(train_images_list[:23000]), self.one_hot(train_labels_list[:23000]), np.array(train_images_list[23000:]), self.one_hot(train_labels_list[23000:])
+        return np.array(train_images_list[:4500]), self.one_hot(train_labels_list[:4500]), np.array(train_images_list[4500:]), self.one_hot(train_labels_list[4500:])
         
     def next_batch(self, batch_size):
         if self.current_index + batch_size > len(self.train_images):
+            print('h')
             images, labels = self.train_images[self.current_index:], self.train_labels[self.current_index:]
             self.current_index = 0
             return images, labels
         else:
+            print('i')
             images, labels = self.train_images[self.current_index : self.current_index + batch_size], self.train_labels[self.current_index: self.current_index+batch_size]
             self.current_index += batch_size
             return images, labels
